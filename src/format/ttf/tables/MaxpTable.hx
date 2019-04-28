@@ -1,5 +1,9 @@
-package ttf.tables;
-// MAXP
+package format.ttf.tables;// MAXP
+import haxe.io.BytesInput;
+import haxe.Int32;
+import haxe.io.Bytes;
+import haxe.io.BytesOutput;
+import format.ttf.tables.Tables;
 typedef MaxpData = {
     versionNumber:          haxe.Int32,
     numGlyphs:              Int,
@@ -19,13 +23,14 @@ typedef MaxpData = {
 }
 
 // maxp (maximum profile) table
+@:forward
 abstract MaxpTable( MaxpData ) to MaxpData {
     public inline function new( maxpData: MaxpData ){
         this = maxpData;
     }
     @:from
     static public inline 
-    function read( bytes: Bytes ): MaxpData {
+    function read( bytes: Bytes ): MaxpTable {
         if( bytes == null ) throw 'no maxp table found';
         var i = new BytesInput(bytes);
         i.bigEndian = true;
@@ -69,7 +74,7 @@ abstract MaxpTable( MaxpData ) to MaxpData {
     @:to
     public inline
     function toString():String {
-        var buf = Table.buffer;
+        var buf = Tables.buffer;
         buf.add( '\n=================================' );
         buf.add( ' maxp table ' );
         buf.add( '=================================\n' );

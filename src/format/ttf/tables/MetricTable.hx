@@ -1,4 +1,4 @@
-package ttf.tables;
+package format.ttf.tables;
 
 // HMTX
 typedef MetricData = {
@@ -7,24 +7,21 @@ typedef MetricData = {
 }
 
 @:forward
-abstract MetricTable( Array<MatricData> ) to Array<MetricData> {
+abstract MetricTable( MetricData ) to MetricData {
     public
-    function new( arrMetricData: Array<MetricData>){
-        this = arrMetricData;
+    function new( metricData: MetricData ){
+        this = metricData;
     }
     public inline
-    function toString ( , lim:Int = -1 ): String {
-        var buf = Table.buffer;
-        buf.add('\n================================= hmtx table =================================\n');
-        for (i in 0...this.length) {
-            if( limit != -1 && i > limit ) break;
-            buf.add( '\nmetrics[');
-            buf.add( i );
-            buf.add( ']: advanceWidth: ');
-            buf.add( this[ i ].advanceWidth);
-            buf.add( ', leftSideBearing:');
-            buf.add( this[ i ].leftSideBearing);
-        }
+    function toString(): String {
+        var buf = Tables.buffer;
+        buf.add('\n================================= Metric table =================================\n');
+        buf.add( '\nmetrics[');
+        buf.add( this );
+        buf.add( ']: advanceWidth: ');
+        buf.add( this.advanceWidth);
+        buf.add( ', leftSideBearing:');
+        buf.add( this.leftSideBearing);
         return buf.toString();
     }
 }

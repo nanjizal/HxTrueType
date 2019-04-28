@@ -1,5 +1,10 @@
 package format.ttf.tables;
-
+import haxe.io.BytesInput;
+import haxe.Int32;
+import haxe.io.Bytes;
+import haxe.io.BytesOutput;
+import format.ttf.tables.Tables;
+import format.ttf.tables.MetricTable;
 // new typedef to store some more properties for writing.
 typedef HmtxData = {
     metrics:          Array<MetricTable>,
@@ -9,16 +14,16 @@ typedef HmtxData = {
 @:forward
 abstract HmtxTable( HmtxData ) to HmtxData { 
     public
-    function new( tHmtxTable: THmtxTable ){
-        this = tHmtxTable;
+    function new( hmtxData: HmtxData ){
+        this = hmtxData;
     }
     // hmtx (horizontal metrics) table
     static public inline 
-    function read( bytes, maxp, hhea ):Array<Metric> {
+    function read( bytes, maxp, hhea ): HmtxTable {
         if (bytes == null) throw 'no hmtx table found';
         var input = new BytesInput(bytes);
         input.bigEndian = true;
-        var metrics = new ArrayMetric();
+        var metrics = new Array<MetricTable>();
         for( i in 0...hhea.numberOfHMetrics ){
             metrics.push( new MetricTable( 
                             { advanceWidth:    input.readUInt16()
@@ -33,14 +38,14 @@ abstract HmtxTable( HmtxData ) to HmtxData {
                             , leftSideBearing: input.readInt16() 
                             }));
         }
-        return new HmtxTable( { metrics:          new MetricTable( metrics )
+        return new HmtxTable( { metrics:          metrics
                               , numberOfHMetrics: hhea.numberOfHMetrics
-                              , numGlyhs:         maxp.numGlyhs } );
+                              , numGlyphs:        maxp.numGlyphs } );
     }
     public inline
     function write( o: haxe.io.Output ): haxe.io.Output {
         var j = 0;
-        var m: Metric;
+        var m: MetricTable;
         for( i in 0...this.numberOfHMetrics ){
             m = this.metrics[ j ];
             o.writeUInt16( m.advanceWidth );
