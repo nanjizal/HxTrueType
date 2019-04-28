@@ -15,12 +15,11 @@ abstract HmtxTable( HmtxData ) to HmtxData {
     // hmtx (horizontal metrics) table
     static public inline 
     function read( bytes, maxp, hhea ):Array<Metric> {
-        if (bytes == null)
-            throw 'no hmtx table found';
+        if (bytes == null) throw 'no hmtx table found';
         var input = new BytesInput(bytes);
         input.bigEndian = true;
         var metrics = new ArrayMetric();
-        for (i in 0...hhea.numberOfHMetrics) {
+        for( i in 0...hhea.numberOfHMetrics ){
             metrics.push( new MetricTable( 
                             { advanceWidth:    input.readUInt16()
                             , leftSideBearing: input.readInt16() // FWord
@@ -43,7 +42,7 @@ abstract HmtxTable( HmtxData ) to HmtxData {
         var j = 0;
         var m: Metric;
         for( i in 0...this.numberOfHMetrics ){
-           m = this.metrics[ j ];
+            m = this.metrics[ j ];
             o.writeUInt16( m.advanceWidth );
             o.writeInt16(  m.advanceWidth );
             j++;

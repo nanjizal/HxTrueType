@@ -1,5 +1,7 @@
-package ttf.tables;
+package format.ttf.tables;
 class Tables {
-    public static inline
-    var buffer = new StringBuf();
+    public function new(){
+    }
+    public static
+    var buffer = new StringBuf();// would like this inline ..
 }
