@@ -1,5 +1,9 @@
-package ttf.tables;
-// HEAD
+package format.ttf.tables;// HEAD
+import haxe.io.BytesInput;
+import haxe.Int32;
+import haxe.io.Bytes;
+import haxe.io.BytesOutput;
+import format.ttf.tables.Tables;
 typedef HeadData = {
     version:            Int32,
     fontRevision:       Int32,
@@ -26,7 +30,7 @@ abstract HeadTable( HeadData ) to HeadData {
     }
     @:from
     static public inline 
-    function read( bytes: Bytes ): HeadData {
+    function read( bytes: Bytes ): HeadTable {
         if( bytes == null ) throw 'no head table found';
         var i = new BytesInput( bytes );
         i.bigEndian = true;
@@ -74,9 +78,9 @@ abstract HeadTable( HeadData ) to HeadData {
     @:to
     public inline
     function toString(): String {
-        var buf = Table.buffer;
+        var buf = Tables.buffer;
         buf.add( '\n=================================' );
-        buf.add( ' head table '
+        buf.add( ' head table ' );
         buf.add( '=================================\n' );
         buf.add( 'version: ' );
         buf.add( this.version );

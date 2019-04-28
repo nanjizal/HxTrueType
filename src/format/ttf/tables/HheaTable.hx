@@ -1,4 +1,9 @@
-package ttf.tables;
+package format.ttf.tables;
+import haxe.io.BytesInput;
+import haxe.Int32;
+import haxe.io.Bytes;
+import haxe.io.BytesOutput;
+import format.ttf.tables.Tables;
 // HHEA
 typedef HheaData = {
     version:                Int32,
@@ -25,7 +30,7 @@ abstract HheaTable( HheaData ) to HheaData {
     }
     @:from
     static public inline 
-    function read( bytes: Bytes ): HheaData_ {
+    function read( bytes: Bytes ): HheaTable {
         if( bytes == null ) throw 'no hhea table found';
         var i = new BytesInput( bytes );
         i.bigEndian = true;
@@ -67,9 +72,9 @@ abstract HheaTable( HheaData ) to HheaData {
     @:to
     public inline
     function toString():String {
-        var buf = Table.buffer;
-        buf.add( '\n================================='
-        buf.add( ' hhea table '
+        var buf = Tables.buffer;
+        buf.add( '\n=================================' );
+        buf.add( ' hhea table ' );
         buf.add( '=================================\n' );
         buf.add( 'version: ' );
         buf.add( this.version );
