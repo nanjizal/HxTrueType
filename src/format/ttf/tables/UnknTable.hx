@@ -1,5 +1,8 @@
 package ttf.tables;
-
+import haxe.io.BytesInput;
+import haxe.Int32;
+import haxe.io.Bytes;
+import haxe.io.BytesOutput;
 abstract UnknTable( String ) to String {
     public inline
     function new( str: String ){

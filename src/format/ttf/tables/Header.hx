@@ -1,4 +1,8 @@
-package ttf.tables;
+package format.ttf.tables;
+import haxe.io.BytesInput;
+import haxe.Int32;
+import haxe.io.Bytes;
+import haxe.io.BytesOutput;
 typedef HeaderData = {
     majorVersion:  Int,
     minorVersion:  Int,
@@ -8,12 +12,12 @@ typedef HeaderData = {
     rangeShift:    Int,
 }
 abstract Header( HeaderData ) to HeaderData {
-    public inline function new( header: Header ){
+    public inline function new( header: HeaderData ){
         this = header;
     }
     @:from
     static public inline 
-    function read( i: haxe.io.Input ): Header_ {
+    function read( i: haxe.io.Input ): Header {
         return new Header( { majorVersion:    i.readUInt16()
                            , minorVersion:    i.readUInt16()
                            , numTables:       i.readUInt16()
@@ -34,10 +38,10 @@ abstract Header( HeaderData ) to HeaderData {
     @:to
     public inline
     function toString(): String {
-        var buf = Table.buffer;
-        buf.add( '\n================================='
-        buf.add( ' Header '
-        buf.add( '=================================\n');
+        var buf = Tables.buffer;
+        buf.add( '\n=================================' );
+        buf.add( ' Header ' );
+        buf.add( '=================================\n' );
         buf.add( 'majorVersion: ' );
         buf.add( this.majorVersion );
         buf.add( '\nminorVersion: ' );

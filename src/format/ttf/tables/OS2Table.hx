@@ -1,4 +1,9 @@
-package ttf.tables; // OS2
+package format.ttf.tables; // OS2
+import haxe.io.BytesInput;
+import haxe.Int32;
+import haxe.io.Bytes;
+import haxe.io.BytesOutput;
+import format.ttf.tables.Tables;
 typedef OS2Data = {
     version:                Int,
     xAvgCharWidth:          Int,
@@ -178,10 +183,10 @@ abstract OS2Table( OS2Data ) to OS2Data {
     }
     public inline
     function toString(): String {
-        var buf = Table.buffer;
+        var buf = Tables.buffer;
         buf.add( '\n=================================' );
-        buf.add( ' os/2 table '
-        buf.add( '=================================\n') ;
+        buf.add( ' os/2 table ' );
+        buf.add( '=================================\n' );
         buf.add( 'version: ' );
         buf.add( this.version );
         buf.add( '\nxAvgCharWidth : ' );

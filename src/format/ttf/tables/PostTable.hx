@@ -1,4 +1,8 @@
-package ttf.tables; // POST
+package format.ttf.tables; // POST
+import haxe.io.BytesInput;
+import haxe.Int32;
+import haxe.io.Bytes;
+import haxe.io.BytesOutput;
 typedef PostData = {
     version:            Int32,
     italicAngle:        Int32,
@@ -19,6 +23,7 @@ abstract PostTable( PostData ) to PostData {
     function new( postData: PostData ){
         this = postData;
     }
+    @:from
     static public inline 
     function read( bytes: Bytes ): PostTable {
         var input = new BytesInput( bytes );
@@ -43,7 +48,7 @@ abstract PostTable( PostData ) to PostData {
                 postData.glyphNameIndex[i] = input.readUInt16();
             }
             var high = 0;
-            for( i in 0...postData.numGlyphs )
+            for( i in 0...postData.numGlyphs ){
                 if( high < postData.glyphNameIndex[ i ] ){
                     high = postData.glyphNameIndex[ i ];
                 }
@@ -64,7 +69,7 @@ abstract PostTable( PostData ) to PostData {
     }
     public inline
     function toString():String {
-        var buf = Table.buffer;
+        var buf = Tables.buffer;
         buf.add( '\n=================================' );
         buf.add( ' post table ' );
         buf.add( '=================================\n' );
