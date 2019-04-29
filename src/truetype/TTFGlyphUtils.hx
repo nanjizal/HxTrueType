@@ -1,6 +1,7 @@
 package truetype;
 
 import format.ttf.Data;
+import format.ttf.tables.HeadTable;
 
 typedef ContourPoint = {
 	onCurve:Bool,
