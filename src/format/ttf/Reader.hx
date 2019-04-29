@@ -40,9 +40,9 @@ class Reader {
 		var hheaData = ( tablesHash.get( "hhea" ): HheaTable );
 		var headData = ( tablesHash.get( "head" ): HeadTable );
 		var maxpData = ( tablesHash.get( "maxp" ): MaxpTable );
-        var locaData = ( LocaTable.read( tablesHash.get( "loca" ), headData, maxpData ): LocaTable );
-        var hmtxData = ( HmtxTable.read( tablesHash.get( "hmtx" ), maxpData, hheaData ): HmtxTable );
-		var cmapData = readCmapTable( tablesHash.get( "cmap" ) );
+                var locaData = ( LocaTable.read( tablesHash.get( "loca" ), headData, maxpData ): LocaTable );
+                var hmtxData = ( HmtxTable.read( tablesHash.get( "hmtx" ), maxpData, hheaData ): HmtxTable );
+	    	var cmapData = readCmapTable( tablesHash.get( "cmap" ) );
 		var glyfData = readGlyfTable( tablesHash.get( "glyf" ), maxpData, locaData, cmapData, hmtxData );
 		var kernData = readKernTable( tablesHash.get( "kern" ) );
 		// var postData = (tablesHash.get("post"): PostTable );
